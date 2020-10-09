@@ -1,0 +1,29 @@
+https://github.com/akiran/react-slick
+
+https://cdnjs.com/libraries/font-awesome
+
+
+npm install react-router-dom react-fontawesome react-simple-sidenav react-slick --save
+
+
+
+za css module
+loader: require.resolve('css-loader'),
+
+//ovo zalijepi dalje
+        options: {
+          modules:true,
+          importLoaders:1,
+          localIdentName: '[name]__[local]__[hash:base64:5]'}
+        }
+
+
+npm install -g json-server
+json-server --watch db.json --port 3004 u drugom terminalu db.json
+
+npm install react-transition-group --save
+
+
+axios
+
+npm install axios --save
