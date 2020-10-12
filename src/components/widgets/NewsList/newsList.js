@@ -17,7 +17,7 @@ export class NewsList extends Component {
         items: [],
         start: this.props.start,
         end: this.props.start + this.props.amount,
-        amount:this.props.amount
+        amount: this.props.amount
     }
 
     componentDidMount() {
@@ -25,11 +25,11 @@ export class NewsList extends Component {
     }
 
     request = (start, end) => {
-            axios.get(`${URL}/teams`)
-            .then( response => {
+        axios.get(`${URL}/teams`)
+            .then(response => {
                 this.setState({
-                    teams:response.data
-                    
+                    teams: response.data
+
                 })
             })
         axios.get(`${URL}/articles?_start=${start}&_end=${end}`)
@@ -55,24 +55,54 @@ export class NewsList extends Component {
         switch (type) {
             case ('card'):
                 template = this.state.items.map((item, i) => (
-                   <CSSTransition
-                    classNames={{
-                        enter:style.newsList_wrapper,
-                        enterActive:style.newsList_wrapper_enter
-                    }}
-                    timeout={500}
-                    key={i}
-                   >
-                       <div>
+                    <CSSTransition
+                        classNames={{
+                            enter: style.newsList_wrapper,
+                            enterActive: style.newsList_wrapper_enter
+                        }}
+                        timeout={500}
+                        key={i}
+                    >
+                        <div>
                             <div className={style.newsList_item}>
                                 <Link to={`article/${item.id}`}>
-                                    <CardInfo teams={this.state.teams} team={item.team} date={item.date}/>
+                                    <CardInfo teams={this.state.teams} team={item.team} date={item.date} />
                                     <h2>{item.title}</h2>
                                 </Link>
                             </div>
                         </div>
-                   </CSSTransition>
+                    </CSSTransition>
                 ));
+                break;
+            case ('cardMain'):
+                template = this.state.items.map((item, i) => (
+                    <CSSTransition
+                        classNames={{
+                            enter: style.newsList_wrapper,
+                            enterActive: style.newsList_wrapper_enter
+                        }}
+                        timeout={500}
+                        key={i}
+                    >
+                        <Link to={`/articles/${item.id}`}>
+                            <div className={style.flex_wrapper}>
+                                <div className={style.left}
+                                    style={{
+                                        background:`url('/images/articles/${item.image}')`
+                                    }}>
+                                    <div></div>
+                                </div>
+                                <div className={style.right}>
+                                    <CardInfo teams={this.state.teams} team={item.team} date={item.date}/>
+                                    <h2>{item.title}</h2>
+                                </div>
+                            </div>
+                        </Link>
+                    </CSSTransition>
+                ));
+
+
+
                 break;
             default:
                 template = null;
@@ -81,7 +111,7 @@ export class NewsList extends Component {
         return template;
     }
     render() {
-        
+
         return (
             <div>
                 <TransitionGroup
@@ -92,10 +122,10 @@ export class NewsList extends Component {
                 </TransitionGroup>
                 <Button
                     type="loadmore"
-                    loadMore={()=>this.loadMore()}
+                    loadMore={() => this.loadMore()}
                     cta="Load more news"
                 />
-                
+
             </div>
         )
     }
